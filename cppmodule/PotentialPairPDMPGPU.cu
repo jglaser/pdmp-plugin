@@ -110,8 +110,8 @@ __global__ void gpu_compute_pair_forces_pdmp_kernel(float4 *d_force,
                 Scalar rcut = sqrtf(rcutsq);
 
                 Scalar3 pe_factors = make_scalar3(0.0,0.0,0.0);
-                pe_factors.z = (Scalar(1.0)-copysignf(Scalar(1.0),dx.x)*dx.x/rcut);
-                pe_factors.z = (Scalar(1.0)-copysignf(Scalar(1.0),dx.y)*dx.y/rcut);
+                pe_factors.x = (Scalar(1.0)-copysignf(Scalar(1.0),dx.x)*dx.x/rcut);
+                pe_factors.y = (Scalar(1.0)-copysignf(Scalar(1.0),dx.y)*dx.y/rcut);
                 pe_factors.z = (Scalar(1.0)-copysignf(Scalar(1.0),dx.z)*dx.z/rcut);
 
                 Scalar max_energy = param*Scalar(8.0)*rcut*rcut*rcut;

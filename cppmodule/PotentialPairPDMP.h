@@ -31,7 +31,9 @@ class PotentialPairPDMP : public ForceCompute
         //! Set the rcut for a single type pair
         virtual void setRcut(unsigned int typ1, unsigned int typ2, Scalar rcut);
         //! Set ron for a single type pair
-        virtual void setRon(unsigned int typ1, unsigned int typ2, Scalar ron);
+        virtual void setRon(unsigned int typ1, unsigned int typ2, Scalar ron)
+            {
+            }
         
         //! Returns a list of log quantities this compute calculates
         virtual std::vector< std::string > getProvidedLogQuantities();

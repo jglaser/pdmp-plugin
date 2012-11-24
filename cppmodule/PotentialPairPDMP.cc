@@ -81,20 +81,6 @@ void PotentialPairPDMP::setRcut(unsigned int typ1, unsigned int typ2, Scalar rcu
     h_rcutsq.data[m_typpair_idx(typ2, typ1)] = rcut * rcut;
     }
 
-void PotentialPairPDMP::setRon(unsigned int typ1, unsigned int typ2, Scalar ron)
-    {
-    if (typ1 >= m_pdata->getNTypes() || typ2 >= m_pdata->getNTypes())
-        {
-        this->m_exec_conf->msg->error() << "pair.pdmp: Trying to set ron for a non existant type! "
-                  << typ1 << "," << typ2 << std::endl;
-        throw std::runtime_error("Error setting parameters in PotentialPairPDMP");
-        }
-    
-    ArrayHandle<Scalar> h_ronsq(m_ronsq, access_location::host, access_mode::readwrite);
-    h_ronsq.data[m_typpair_idx(typ1, typ2)] = ron * ron;
-    h_ronsq.data[m_typpair_idx(typ2, typ1)] = ron * ron;
-    }
-
 /*! PotentialPairPDMP provides:
      - \c pair_pdmp_energy
     where "name" is replaced with evaluator::getName()
