@@ -1,3 +1,4 @@
+#ifdef ENABLE_CUDA
 #ifndef __POTENTIAL_PAIR_PDMP_GPU_H__
 #define __POTENTIAL_PAIR_PDMP_GPU_H__
 
@@ -12,7 +13,6 @@
     \note This header cannot be compiled by nvcc
 */
 
-#ifdef ENABLE_CUDA
 
 #ifdef NVCC
 #error This header cannot be compiled by nvcc

@@ -1,3 +1,4 @@
+#ifdef ENABLE_CUDA
 #include "PotentialPairPDMPGPU.h"
 
 PotentialPairPDMPGPU::PotentialPairPDMPGPU(boost::shared_ptr<SystemDefinition> sysdef,
@@ -83,4 +84,4 @@ void export_PotentialPairPDMPGPU()
               .def("setBlockSize", &PotentialPairPDMPGPU::setBlockSize)
               ;
     }
-
+#endif
