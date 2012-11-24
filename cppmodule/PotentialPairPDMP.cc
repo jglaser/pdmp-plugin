@@ -217,7 +217,7 @@ void PotentialPairPDMP::computeForces(unsigned int timestep)
                 pe_factors.y = (Scalar(1.0)-fabs(dx.y)/rcut);
                 pe_factors.z = (Scalar(1.0)-fabs(dx.z)/rcut);
 
-                Scalar max_energy = param*Scalar(8.0)*rcut*rcut*rcut;
+                Scalar max_energy = param;
 
                 pe = max_energy*pe_factors.x*pe_factors.y*pe_factors.z;
 
