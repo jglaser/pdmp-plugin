@@ -105,21 +105,24 @@ __global__ void gpu_compute_pair_forces_pdmp_kernel(float4 *d_force,
 
             Scalar3 f = make_scalar3(0.0,0.0,0.0);
             // evaluate the potential
-            if (dx.x*dx.x < rcutsq && dx.y*dx.y < rcutsq && dx.z*dx.z < rcutsq)
+
+            // dimensions of cubic overlap volume
+            Scalar Lsq= rcutsq/Scalar(3.0);
+            if (dx.x*dx.x < Lsq && dx.y*dx.y < Lsq && dx.z*dx.z < Lsq)
                 {
-                Scalar rcut = sqrtf(rcutsq);
+                Scalar L = sqrtf(Lsq);
 
                 Scalar3 pe_factors = make_scalar3(0.0,0.0,0.0);
-                pe_factors.x = (Scalar(1.0)-copysignf(Scalar(1.0),dx.x)*dx.x/rcut);
-                pe_factors.y = (Scalar(1.0)-copysignf(Scalar(1.0),dx.y)*dx.y/rcut);
-                pe_factors.z = (Scalar(1.0)-copysignf(Scalar(1.0),dx.z)*dx.z/rcut);
+                pe_factors.x = (Scalar(1.0)-copysignf(Scalar(1.0),dx.x)*dx.x/L);
+                pe_factors.y = (Scalar(1.0)-copysignf(Scalar(1.0),dx.y)*dx.y/L);
+                pe_factors.z = (Scalar(1.0)-copysignf(Scalar(1.0),dx.z)*dx.z/L);
 
                 Scalar max_energy = param;
 
 
-                f.x = copysignf(Scalar(1.0),dx.x)/rcut*max_energy*pe_factors.y*pe_factors.z;
-                f.y = copysignf(Scalar(1.0),dx.y)/rcut*max_energy*pe_factors.x*pe_factors.z;
-                f.z = copysignf(Scalar(1.0),dx.z)/rcut*max_energy*pe_factors.x*pe_factors.y;
+                f.x = copysignf(Scalar(1.0),dx.x)/L*max_energy*pe_factors.y*pe_factors.z;
+                f.y = copysignf(Scalar(1.0),dx.y)/L*max_energy*pe_factors.x*pe_factors.z;
+                f.z = copysignf(Scalar(1.0),dx.z)/L*max_energy*pe_factors.x*pe_factors.y;
                 force.x += f.x;
                 force.y += f.y;
                 force.z += f.z;

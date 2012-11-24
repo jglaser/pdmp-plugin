@@ -208,22 +208,25 @@ void PotentialPairPDMP::computeForces(unsigned int timestep)
 
             Scalar3 force = make_scalar3(0.0,0.0,0.0);
             Scalar pe = Scalar(0.0);
-            if (dx.x*dx.x < rcutsq && dx.y*dx.y < rcutsq && dx.z*dx.z < rcutsq)
+
+            //dimensions of cubic overlap volume
+            Scalar Lsq = rcutsq/Scalar(3.0);
+            if (dx.x*dx.x < Lsq && dx.y*dx.y < Lsq && dx.z*dx.z < Lsq)
                 {
-                Scalar rcut = sqrtf(rcutsq);
+                Scalar L = sqrt(Lsq);
 
                 Scalar3 pe_factors = make_scalar3(0.0,0.0,0.0);
-                pe_factors.x = (Scalar(1.0)-fabs(dx.x)/rcut);
-                pe_factors.y = (Scalar(1.0)-fabs(dx.y)/rcut);
-                pe_factors.z = (Scalar(1.0)-fabs(dx.z)/rcut);
+                pe_factors.x = (Scalar(1.0)-fabs(dx.x)/L);
+                pe_factors.y = (Scalar(1.0)-fabs(dx.y)/L);
+                pe_factors.z = (Scalar(1.0)-fabs(dx.z)/L);
 
                 Scalar max_energy = param;
 
                 pe = max_energy*pe_factors.x*pe_factors.y*pe_factors.z;
 
-                force.x = copysign(1.0,dx.x)/rcut*max_energy*pe_factors.y*pe_factors.z;
-                force.y = copysign(1.0,dx.y)/rcut*max_energy*pe_factors.x*pe_factors.z;
-                force.z = copysign(1.0,dx.z)/rcut*max_energy*pe_factors.x*pe_factors.y;
+                force.x = copysign(1.0,dx.x)/L*max_energy*pe_factors.y*pe_factors.z;
+                force.y = copysign(1.0,dx.y)/L*max_energy*pe_factors.x*pe_factors.z;
+                force.z = copysign(1.0,dx.z)/L*max_energy*pe_factors.x*pe_factors.y;
                 
                 fi += force;
                 pei += pe*Scalar(0.5);
