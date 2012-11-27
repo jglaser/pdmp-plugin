@@ -1,4 +1,3 @@
-#ifdef ENABLE_CUDA
 #ifndef __POTENTIAL_PAIR_PDMP_GPU_H__
 #define __POTENTIAL_PAIR_PDMP_GPU_H__
 
@@ -7,6 +6,8 @@
 
 #include "PotentialPairPDMP.h"
 #include "PotentialPairPDMPGPU.cuh"
+
+#ifdef ENABLE_CUDA
 
 /*! \file PotentialPairPDMPGPU.h
     \brief Defines the template class for standard pair potentials on the GPU

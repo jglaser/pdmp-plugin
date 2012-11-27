@@ -1,5 +1,6 @@
-#ifdef ENABLE_CUDA
 #include "PotentialPairPDMPGPU.h"
+
+#ifdef ENABLE_CUDA
 
 PotentialPairPDMPGPU::PotentialPairPDMPGPU(boost::shared_ptr<SystemDefinition> sysdef,
                                            boost::shared_ptr<NeighborList> nlist,
